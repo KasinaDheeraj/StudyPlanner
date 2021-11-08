@@ -8,16 +8,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-public class AboutFragment extends Fragment {
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+public class TaskFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View row=inflater.inflate(R.layout.fragment_about, container, false);
-        Button b=row.findViewById(R.id.daily);
-        b.setOnClickListener(new View.OnClickListener() {
+        View row=inflater.inflate(R.layout.fragment_task, container, false);
+        FloatingActionButton fab = row.findViewById(R.id.fabtf);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(),AddTaskActivity.class);
@@ -26,4 +27,6 @@ public class AboutFragment extends Fragment {
         });
         return row;
     }
+
+
 }

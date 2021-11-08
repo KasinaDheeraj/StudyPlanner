@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SubjectFragment">
+    tools:context=".TaskFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_subject"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:text="@string/hello_blank_fragment" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabsf"
+        android:id="@+id/fabtf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -19,5 +19,4 @@
         android:src="@drawable/ic_add"
         android:contentDescription="@string/add"
         android:layout_margin="16dp" />
-
 </RelativeLayout>

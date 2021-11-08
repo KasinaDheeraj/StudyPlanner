@@ -37,7 +37,7 @@ public class SubjectFragment extends Fragment {
         View row=inflater.inflate(R.layout.fragment_subject, container, false);
 
         //Floating actionbar for adding subjects
-        FloatingActionButton fab = row.findViewById(R.id.fab);
+        FloatingActionButton fab = row.findViewById(R.id.fabsf);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

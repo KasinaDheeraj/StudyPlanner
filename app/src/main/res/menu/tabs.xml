@@ -6,9 +6,9 @@
         android:title="@string/home_tab" />
 
     <item
-        android:id="@+id/tab_todo"
-        android:icon="@drawable/ic_home"
-        android:title="@string/home_tab" />
+        android:id="@+id/tab_tasks"
+        android:icon="@drawable/ic_tasks"
+        android:title="@string/tasks" />
 
     <item
         android:id="@+id/tab_calendar"

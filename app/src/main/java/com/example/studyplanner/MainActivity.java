@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         ViewpagerAdapter adapter = new ViewpagerAdapter(fm,new String[]{"Home","Home","Home","About"});
 
         adapter.addFragment(new HomeFragment());
-        adapter.addFragment(new HomeFragment());
+        adapter.addFragment(new TaskFragment());
         adapter.addFragment(new SubjectFragment());
         adapter.addFragment(new AboutFragment());
 
