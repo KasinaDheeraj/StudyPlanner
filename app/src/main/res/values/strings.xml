@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">StudyPlanner</string>
+    <string name="home_tab">Home</string>
+    <string name="about_tab">About</string>
+    <string name="subject_tab">Subjects</string>
+
+    <string name="add">Add</string>
+    <string name="saved_success">Saved Successfully!</string>
+    <string name="undo">UNDO</string>
+</resources>

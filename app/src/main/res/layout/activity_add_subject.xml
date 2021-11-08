@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/addSubject"
+    tools:context=".AddSubjectActivity">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/SubeditTextLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/teachEditTextLayout"
+            android:layout_marginStart="32dp"
+            app:hintAnimationEnabled="true"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_marginEnd="32dp"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidth="1dp"
+            android:hint="Subject Name">
+
+            <!--this is the actual edit text which takes the input-->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/SubeditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:textColor="@color/black"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teachEditTextLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_above="@+id/noteEditTextLayout"
+            app:hintAnimationEnabled="true"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_marginEnd="32dp"
+            app:boxStrokeColor="@color/black"
+            android:hint="Teacher">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/teachEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:textColor="@color/black"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/noteEditTextLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_centerInParent="true"
+            app:hintAnimationEnabled="true"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_marginEnd="32dp"
+            app:boxStrokeColor="@color/black"
+            android:hint="Note">
+
+            <!--this is the actual edit text which takes the input-->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/noteEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/saveSub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:text="Save"
+        app:strokeColor="#673AB7"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/noteEditTextLayout"
+        android:onClick="saveAndExit"/>
+
+</RelativeLayout>

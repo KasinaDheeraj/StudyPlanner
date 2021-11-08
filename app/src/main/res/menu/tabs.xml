@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/tab_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home_tab" />
+
+    <item
+        android:id="@+id/tab_todo"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home_tab" />
+
+    <item
+        android:id="@+id/tab_calendar"
+        android:icon="@drawable/ic_book"
+        android:title="@string/subject_tab" />
+
+    <item
+        android:id="@+id/tab_About"
+        android:icon="@drawable/ic_about"
+        android:title="@string/about_tab" />
+</menu>
