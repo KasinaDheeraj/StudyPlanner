@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 
-@Database(entities={Schedule.class,Subject.class},version = 3,exportSchema = false)
+@Database(entities={Schedule.class,Subject.class},version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();

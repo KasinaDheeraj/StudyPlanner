@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnCount="2"
     tools:context=".AddTaskActivity"
-    android:padding="8dp">
+    android:id="@+id/addTask"
+    android:padding="8dp"
+    android:columnCount="2">
     <TextView
         android:layout_row="0"
         android:layout_column="0"
@@ -25,10 +26,15 @@
         android:gravity="center"
         android:layout_columnWeight="20"/>
     <EditText
+        android:layout_width="120dp"
         android:id="@+id/task_subET"
         android:layout_row="1"
         android:layout_column="1"
-        android:layout_columnWeight="80"/>
+        android:layout_columnWeight="80"
+        android:inputType="text"
+        android:gravity="center"
+        android:singleLine="true"
+        />
 
     <TextView
         android:id="@+id/task_note"
@@ -43,7 +49,11 @@
         android:id="@+id/task_noteET"
         android:layout_row="2"
         android:layout_column="1"
-        android:layout_columnWeight="80"/>
+        android:layout_width="120dp"
+        android:layout_columnWeight="80"
+        android:inputType="text"
+        android:gravity="center"
+        android:maxLines="1"/>
 
     <TextView
         android:id="@+id/task_date"
@@ -67,21 +77,46 @@
     <TextView
         android:layout_row="4"
         android:layout_column="0"
-        android:gravity="start"
+        android:gravity="center"
+        android:text="Repeating Schedule"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_columnWeight="80"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/schedule_switch"
+        android:layout_row="4"
+        android:layout_column="1"
+        android:layout_gravity="start"
+        android:layout_columnWeight="80"/>
+
+    <TextView
+        android:layout_row="5"
+        android:layout_column="0"
+        android:gravity="center"
         android:text="Remainder"
         android:textStyle="bold"
         android:textSize="18dp"
         android:layout_columnWeight="80"/>
+    <ImageView
+        android:layout_height="24dp"
+        android:layout_width="24dp"
+        android:layout_row="5"
+        android:layout_column="0"
+        android:layout_gravity="end|center_vertical"
+        android:src="@drawable/ic_bell"
+        android:layout_columnWeight="80"/>
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/task_switch"
-        android:layout_row="4"
-        android:layout_column="0"
-        android:gravity="end"
+        android:layout_row="5"
+        android:layout_column="1"
+        android:layout_gravity="start"
         android:layout_columnWeight="80"/>
+
 
     <TextView
         android:id="@+id/task_remdate"
-        android:layout_row="5"
+        android:layout_row="6"
         android:layout_column="0"
         android:text=" RemainderDate :"
         android:textStyle="bold"
@@ -91,7 +126,7 @@
         android:visibility="gone"/>
     <Button
         android:id="@+id/task_remdateButton"
-        android:layout_row="5"
+        android:layout_row="6"
         android:layout_column="1"
         android:layout_columnWeight="80"
         android:text="Set Date"
@@ -102,7 +137,7 @@
 
     <TextView
         android:id="@+id/task_remtime"
-        android:layout_row="6"
+        android:layout_row="7"
         android:layout_column="0"
         android:text=" Remainder Time :"
         android:textStyle="bold"
@@ -112,7 +147,7 @@
         android:visibility="gone"/>
     <Button
         android:id="@+id/task_remtimeButton"
-        android:layout_row="6"
+        android:layout_row="7"
         android:layout_column="1"
         android:layout_columnWeight="80"
         android:textColor="@color/black"
@@ -121,7 +156,8 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:visibility="gone"/>
     <Button
-        android:layout_row="8"
+        android:id="@+id/save_task"
+        android:layout_row="9"
         android:layout_column="0"
         android:layout_columnSpan="2"
         android:layout_rowSpan="2"

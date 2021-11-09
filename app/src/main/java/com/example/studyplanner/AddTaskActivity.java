@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.app.AlarmManager;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +19,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.studyplanner.database.AppDatabase;
+import com.example.studyplanner.database.Schedule;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddTaskActivity extends AppCompatActivity {
 
@@ -36,7 +44,55 @@ public class AddTaskActivity extends AppCompatActivity {
         Button dateB=findViewById(R.id.task_dateButton);
         Button remDateB=findViewById(R.id.task_remdateButton);
         Button remTimeB=findViewById(R.id.task_remtimeButton);
+        Button saveB=findViewById(R.id.save_task);
+        SwitchCompat st=findViewById(R.id.task_switch);
+        SwitchCompat ss=findViewById(R.id.schedule_switch);
 
+        saveB.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                AppDatabase db=AppDatabase.getDbInstance(AddTaskActivity.this);
+                Schedule s=new Schedule();
+                s.subject=subET.getText().toString();
+                s.note=noteET.getText().toString();
+
+                String pattern="dd/MM/YYYY";
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N&&!dateB.getText().toString().equalsIgnoreCase("set date")) {
+                    SimpleDateFormat sdf=new SimpleDateFormat(pattern);
+                    try {
+                        Date date=sdf.parse(dateB.getText().toString());
+                        Date curr=new Date();
+                        if(curr.after(date)){
+                            s.status=true;
+                        }else{
+                            s.status=false;
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                s.isSchedule=ss.isChecked();
+
+                if(!dateB.getText().toString().equalsIgnoreCase("set date")){
+                    s.date=dateB.getText().toString();
+                    if(s.subject!=""|s.note!="") {
+                        db.userDao().insertSchedule(s);
+
+                        Snackbar.make(findViewById(R.id.addTask), R.string.saved_success, Snackbar.LENGTH_LONG)
+                                .setAction(R.string.undo, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        db.userDao().deleteSchedule(s.date,s.subject);
+                                    }
+                                }).show();
+                    }
+                }else{
+                    Snackbar.make(findViewById(R.id.addTask), R.string.valid_args, Snackbar.LENGTH_SHORT).show();
+                }
+
+            }
+        });
         remDateB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,11 +114,10 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         });
 
-        SwitchCompat s=findViewById(R.id.task_switch);
-        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        st.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(s.isChecked()){
+                if(st.isChecked()){
                     remDate.setVisibility(View.VISIBLE);
                     remTime.setVisibility(View.VISIBLE);
                     remDateB.setVisibility(View.VISIBLE);

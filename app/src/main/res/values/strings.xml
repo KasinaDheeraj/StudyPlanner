@@ -10,4 +10,6 @@
     <string name="tasks">Tasks</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="valid_args">Please enter non null subject or note with date!</string>
 </resources>
