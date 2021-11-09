@@ -5,10 +5,103 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <TextView
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="In HOME fragment"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/add"
+        android:src="@drawable/ic_add" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabth_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fabth"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/add"
+        android:src="@drawable/ic_hourglass"/>
+
+    <TextView
+        android:id="@+id/fabth_ttv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/fabth"
+        android:layout_marginBottom="18dp"
+        android:layout_toStartOf="@+id/fabth_task"
+        android:text="@string/add_task" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabth_sub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fabth_task"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/add"
+        android:src="@drawable/ic_book_outline"/>
+    <TextView
+        android:id="@+id/fabth_stv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/fabth_task"
+        android:layout_marginBottom="18dp"
+        android:layout_toStartOf="@+id/fabth_sub"
+        android:text="@string/add_subject" />
 
 </RelativeLayout>

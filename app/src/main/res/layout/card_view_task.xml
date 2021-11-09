@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
-            card_view:cardBackgroundColor="#FFFF00"
+            card_view:cardBackgroundColor="@color/yellow"
             card_view:cardCornerRadius="8dp">
             <RelativeLayout
                 android:layout_width="match_parent"
