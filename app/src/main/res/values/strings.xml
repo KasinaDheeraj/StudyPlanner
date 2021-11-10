@@ -14,4 +14,33 @@
     <string name="valid_args">Please enter non null subject or note with date!</string>
     <string name="add_task">ADD TASK</string>
     <string name="add_subject">ADD SUBJECT</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="previous">Previous</string>
+    <string name="today">TODAY</string>
+    <string name="remainder">Remainder</string>
+    <string name="remainderdate">RemainderDate :</string>
+    <string name="set_date">Set Date</string>
+    <string name="remainder_time">Remainder Time :</string>
+    <string name="set_time">Set Time</string>
+    <string name="save_task">Save Task</string>
+    <string name="repeating_schedule">Repeating Schedule</string>
+    <string name="date">Date :</string>
+    <string name="note">Note :</string>
+    <string name="subject">Subject :</string>
+    <string name="add_a_task">Add a Task</string>
+
+    <string-array name="Days">
+        <item>Select</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
 </resources>

@@ -23,6 +23,9 @@ public class Schedule {
     @ColumnInfo(name="note")
     public String note;
 
+    @ColumnInfo(name="day")
+    public int day;
+
     @ColumnInfo(name="status")
     public boolean status;
 

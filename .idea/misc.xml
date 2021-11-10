@@ -9,9 +9,10 @@
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/drawable/ic_bell.xml" value="0.290625" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/drawable/ic_delete.xml" value="0.290625" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/drawable/ic_home.xml" value="0.290625" />
+        <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/drawable/ic_monday.xml" value="0.290625" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/drawable/ic_time_history.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/activity_add_subject.xml" value="0.14375" />
-        <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/activity_add_task.xml" value="0.176" />
+        <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/activity_add_task.xml" value="0.4" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/activity_daily_table.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/activity_main.xml" value="0.152" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/card_view.xml" value="0.27447916666666666" />
@@ -22,9 +23,9 @@
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/dialogtime.xml" value="0.14375" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/fragment_about.xml" value="0.2604166666666667" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/fragment_day_schedule.xml" value="0.176" />
-        <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/fragment_home.xml" value="0.12" />
+        <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/fragment_subject.xml" value="0.27447916666666666" />
-        <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/fragment_task.xml" value="0.1" />
+        <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/layout/fragment_task.xml" value="0.264" />
         <entry key="..\:/Users/Dheeru/AndroidStudioProjects/StudyPlanner/app/src/main/res/menu/tabs.xml" value="0.27447916666666666" />
       </map>
     </option>

@@ -142,8 +142,8 @@ public class TaskFragment extends Fragment {
 
                     //Delete from database
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Are you sure you want to delete this schedule?")
-                            .setTitle("Delete Schedule")
+                    builder.setMessage("Are you sure you want to delete this task?")
+                            .setTitle("Delete task")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

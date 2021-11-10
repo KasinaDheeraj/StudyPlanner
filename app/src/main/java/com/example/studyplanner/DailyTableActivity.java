@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.studyplanner.adapters.ViewpagerAdapter;
@@ -11,7 +12,9 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 public class DailyTableActivity extends AppCompatActivity {
 
-    private String[] days={"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+    private String[] days={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+
+    public static final String DAY="";
 
     ViewPager viewPager;
 
@@ -29,6 +32,9 @@ public class DailyTableActivity extends AppCompatActivity {
         SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewPagerTab);
         viewPagerTab.setViewPager(viewPager);
 
+        int day=getIntent().getIntExtra(DAY,0);
+        day=(day>=0&&day<6)?day:0;
+        viewPager.setCurrentItem(day);
 
     }
 
@@ -41,7 +47,6 @@ public class DailyTableActivity extends AppCompatActivity {
         adapter.addFragment(new DayScheduleFragment(3));
         adapter.addFragment(new DayScheduleFragment(4));
         adapter.addFragment(new DayScheduleFragment(5));
-        adapter.addFragment(new DayScheduleFragment(6));
 
         viewPager.setAdapter(adapter);
 

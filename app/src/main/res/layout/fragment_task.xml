@@ -40,7 +40,7 @@
                 android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_time_history"
-                android:text="@string/upcoming"
+                android:text="@string/previous"
                 android:textColor="@color/black"
                 app:strokeColor="@color/black"
                 app:strokeWidth="2dp" />

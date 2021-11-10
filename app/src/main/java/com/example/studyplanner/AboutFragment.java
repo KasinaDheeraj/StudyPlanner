@@ -16,14 +16,7 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View row=inflater.inflate(R.layout.fragment_about, container, false);
-        Button b=row.findViewById(R.id.daily);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getContext(),AddTaskActivity.class);
-                startActivity(intent);
-            }
-        });
+
         return row;
     }
 }

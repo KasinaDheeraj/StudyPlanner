@@ -49,7 +49,7 @@ public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder
         Date dt= null;
         try {
             dt = sdf1.parse(schedules.get(position).date);
-            SimpleDateFormat sdf2=new SimpleDateFormat("ddMMM YY");
+            SimpleDateFormat sdf2=new SimpleDateFormat("dd MMM YY");
             String d=sdf2.format(dt);
             date.setText(d);
         } catch (ParseException e) {
@@ -111,6 +111,12 @@ public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder
             return true;
         });
 
+        notifyDataSetChanged();
+    }
+
+    public void onlySchedules(int day){
+        schedules= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
+        schedules.removeIf(s -> {return !s.isSchedule|!(s.day==day);});
         notifyDataSetChanged();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.studyplanner;
 
+import static android.view.View.GONE;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,18 +11,21 @@ import android.app.AlarmManager;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.studyplanner.database.AppDatabase;
 import com.example.studyplanner.database.Schedule;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
@@ -47,6 +52,7 @@ public class AddTaskActivity extends AppCompatActivity {
         Button saveB=findViewById(R.id.save_task);
         SwitchCompat st=findViewById(R.id.task_switch);
         SwitchCompat ss=findViewById(R.id.schedule_switch);
+        Spinner spinner=findViewById(R.id.schedule_spinner);
 
         saveB.setOnClickListener(new View.OnClickListener() {
 
@@ -58,7 +64,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 s.note=noteET.getText().toString();
 
                 String pattern="dd/MM/YYYY";
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N&&!dateB.getText().toString().equalsIgnoreCase("set date")) {
+                if (!dateB.getText().toString().equalsIgnoreCase("set date")) {
                     SimpleDateFormat sdf=new SimpleDateFormat(pattern);
                     try {
                         Date date=sdf.parse(dateB.getText().toString());
@@ -73,10 +79,18 @@ public class AddTaskActivity extends AppCompatActivity {
                     }
                 }
                 s.isSchedule=ss.isChecked();
+                if(s.isSchedule){
+                    s.day=spinner.getSelectedItemPosition()-1;
+                    if(s.day==-1){
+                        Snackbar.make(findViewById(R.id.addTask),"Please select day for schedule.", Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
 
-                if(!dateB.getText().toString().equalsIgnoreCase("set date")){
+                if(!dateB.getText().toString().equalsIgnoreCase("set date")|ss.isChecked()){
                     s.date=dateB.getText().toString();
-                    if(s.subject!=""|s.note!="") {
+                    if(!s.subject.equals("") | !s.note.equals("")) {
+
                         db.userDao().insertSchedule(s);
 
                         Snackbar.make(findViewById(R.id.addTask), R.string.saved_success, Snackbar.LENGTH_LONG)
@@ -86,6 +100,8 @@ public class AddTaskActivity extends AppCompatActivity {
                                         db.userDao().deleteSchedule(s.date,s.subject);
                                     }
                                 }).show();
+                    }else{
+                        Snackbar.make(findViewById(R.id.addTask), R.string.valid_args, Snackbar.LENGTH_SHORT).show();
                     }
                 }else{
                     Snackbar.make(findViewById(R.id.addTask), R.string.valid_args, Snackbar.LENGTH_SHORT).show();
@@ -93,6 +109,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
             }
         });
+
         remDateB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,10 +140,21 @@ public class AddTaskActivity extends AppCompatActivity {
                     remDateB.setVisibility(View.VISIBLE);
                     remTimeB.setVisibility(View.VISIBLE);
                 }else{
-                    remDate.setVisibility(View.GONE);
-                    remTime.setVisibility(View.GONE);
-                    remDateB.setVisibility(View.GONE);
-                    remTimeB.setVisibility(View.GONE);
+                    remDate.setVisibility(GONE);
+                    remTime.setVisibility(GONE);
+                    remDateB.setVisibility(GONE);
+                    remTimeB.setVisibility(GONE);
+                }
+            }
+        });
+
+        ss.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(ss.isChecked()){
+                    spinner.setVisibility(View.VISIBLE);
+                }else{
+                    spinner.setVisibility(GONE);
                 }
             }
         });

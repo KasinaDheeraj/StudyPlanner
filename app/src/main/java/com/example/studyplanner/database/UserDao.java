@@ -34,6 +34,9 @@ public interface UserDao {
     @Query("DELETE FROM Schedule WHERE date=:date AND subject=:subject")
     void deleteSchedule(String date,String subject);
 
+    @Query("DELETE FROM Schedule WHERE date=:date AND subject=:subject AND isSchedule= 1")
+    void deleteScheduleD(String date,String subject);
+
     @Query("DELETE FROM Subject WHERE subjectName=:subjectName AND teacher=:teacher")
     void deleteSubject(String subjectName,String teacher);
 
