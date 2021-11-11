@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.studyplanner.adapters.RVScheduleAdapter;
 import com.example.studyplanner.adapters.RVTaskAdapter;
 import com.example.studyplanner.database.AppDatabase;
 import com.example.studyplanner.database.Schedule;
@@ -25,7 +26,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 public class DayScheduleFragment extends Fragment {
 
-    RVTaskAdapter adapter;
+    RVScheduleAdapter adapter;
 
     private int DAY;
 
@@ -40,17 +41,14 @@ public class DayScheduleFragment extends Fragment {
                              Bundle savedInstanceState) {
         View row=inflater.inflate(R.layout.fragment_day_schedule, container, false);
 
-        TextView tv=row.findViewById(R.id.daytv);
-
         RecyclerView recyclerView=row.findViewById(R.id.rv_day_schedule);
-        adapter=new RVTaskAdapter(getContext());
+        adapter=new RVScheduleAdapter(getContext());
         adapter.onlySchedules(DAY);
         LinearLayoutManager lm=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(lm);
         recyclerView.setAdapter(adapter);
         setUpSwipeRecycler(recyclerView);
 
-        tv.setText(days[DAY]);
         return row;
     }
 
@@ -98,11 +96,17 @@ public class DayScheduleFragment extends Fragment {
                                     int p=viewHolder.getAbsoluteAdapterPosition();
                                     Schedule s=adapter.schedules.get(p);
 
-                                    db.userDao().deleteScheduleD(s.date,s.subject);
+                                    db.userDao().deleteScheduleD(s.uid);
 
                                     adapter.removeItem(p);
 
                                     Intent intent =new Intent(getContext(),AddTaskActivity.class);
+                                    Bundle extras = new Bundle();
+                                    extras.putBoolean("isSchedule",s.isSchedule);
+                                    extras.putString("subject",s.subject);
+                                    extras.putString("note",s.note);
+                                    extras.putInt("day",s.day);
+                                    intent.putExtras(extras);
                                     startActivity(intent);
                                 }
                             }).setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -127,7 +131,7 @@ public class DayScheduleFragment extends Fragment {
                                     int p=viewHolder.getAbsoluteAdapterPosition();
                                     Schedule s=adapter.schedules.get(p);
 
-                                    db.userDao().deleteScheduleD(s.date,s.subject);
+                                    db.userDao().deleteScheduleD(s.uid);
 
                                     adapter.removeItem(p);
                                 }

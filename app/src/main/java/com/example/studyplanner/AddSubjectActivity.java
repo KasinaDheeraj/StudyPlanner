@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import com.example.studyplanner.database.AppDatabase;
 import com.example.studyplanner.database.Subject;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class AddSubjectActivity extends AppCompatActivity {
@@ -29,7 +30,7 @@ public class AddSubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_subject);
 
-        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        final Drawable upArrow = this.getDrawable(R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -40,6 +41,14 @@ public class AddSubjectActivity extends AppCompatActivity {
         subjectET=findViewById(R.id.SubeditText);
         teacherET=findViewById(R.id.teachEditText);
         noteET=findViewById(R.id.noteEditText);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            subjectET.setText(extras.getString("addSubname", ""));
+            teacherET.setText(extras.getString("addSubTeacher", ""));
+            noteET.setText(extras.getString("addSubnote", ""));
+        }
+
     }
     public void saveAndExit(View v){
 
@@ -50,20 +59,23 @@ public class AddSubjectActivity extends AppCompatActivity {
         s.teacher=teacherET.getText().toString();
         s.note=noteET.getText().toString();
 
-        if(s.subjectName!=null&&!s.subjectName.equals(""))
-        db.userDao().insertSubject(s);
+        if(s.subjectName!=null&&!s.subjectName.equals("")&&!s.teacher.equals("")) {
+            db.userDao().insertSubject(s);
 
-        Snackbar.make(findViewById(R.id.addSubject), R.string.saved_success, Snackbar.LENGTH_LONG)
-                .setAction(R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        db.userDao().deleteSubject(s.subjectName,s.teacher);
-                    }
-                }).show();
+            Snackbar.make(findViewById(R.id.addSubject), R.string.saved_success, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            db.userDao().deleteSubjectArgs(s.subjectName, s.teacher);
+                        }
+                    }).show();
 
-        subjectET.setText("");
-        noteET.setText("");
-        teacherET.setText("");
+            subjectET.setText("");
+            noteET.setText("");
+            teacherET.setText("");
+        }else{
+            Snackbar.make(findViewById(R.id.addSubject),"Please enter subject and teacher.", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     public static void setStatusBarGradiant(Activity activity) {

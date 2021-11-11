@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="100dp"
     card_view:cardCornerRadius="8dp">
 
     <RelativeLayout
@@ -45,16 +45,19 @@
                     android:layout_toEndOf="@+id/img_cvsched"
                     android:gravity="center"
                     android:maxLines="1"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
+
                 <TextView
-                    android:id="@+id/teach_cv"
-                    android:layout_toEndOf="@+id/img_cvsched"
-                    android:layout_below="@+id/sub_cvsched"
+                    android:id="@+id/note_cvsched"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="1dp"
-                    android:maxLines="1"
                     android:layout_height="50dp"
-                    android:gravity="center"/>
+                    android:layout_below="@+id/sub_cvsched"
+                    android:layout_marginTop="1dp"
+                    android:textSize="24sp"
+                    android:layout_toEndOf="@+id/img_cvsched"
+                    android:gravity="center"
+                    android:maxLines="1" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>

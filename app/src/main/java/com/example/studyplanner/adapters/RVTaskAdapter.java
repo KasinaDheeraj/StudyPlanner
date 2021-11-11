@@ -20,11 +20,12 @@ import java.util.List;
 
 public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder> {
 
-    public List<Schedule> schedules;
+    private String[] days={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+    public List<Schedule> tasks;
     Context context;
 
     public RVTaskAdapter(Context context){
-        schedules= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
+        tasks= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
         this.context=context;
     }
 
@@ -42,25 +43,27 @@ public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder
         TextView note=cv.findViewById(R.id.note_cvtask);
         TextView date=cv.findViewById(R.id.time_cvtask);
 
-        sub.setText(schedules.get(position).subject);
-        note.setText(schedules.get(position).note);
+        sub.setText(tasks.get(position).subject);
+        note.setText(tasks.get(position).note);
 
         SimpleDateFormat sdf1=new SimpleDateFormat("dd/MM/YYYY");
-        Date dt= null;
         try {
-            dt = sdf1.parse(schedules.get(position).date);
+            Date dt = sdf1.parse(tasks.get(position).date);
             SimpleDateFormat sdf2=new SimpleDateFormat("dd MMM YY");
             String d=sdf2.format(dt);
             date.setText(d);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        if(tasks.get(position).isSchedule){
+            date.setText(days[tasks.get(position).day]);
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return schedules.size();
+        return tasks.size();
     }
 
     public static class ViewHolder extends  RecyclerView.ViewHolder{
@@ -73,23 +76,23 @@ public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder
 
     public void removeItem(int position){
 
-        schedules.remove(position);
+        tasks.remove(position);
         notifyItemRemoved(position);
     }
 
     public void upcomingTasks(){
-        schedules= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
+        tasks= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
         Date curr=new Date();
         String pattern="dd/MM/YYYY";
 
         SimpleDateFormat sdf= new SimpleDateFormat(pattern);
-        schedules.removeIf(s -> {
+        tasks.removeIf(s -> {
             try {
                 return !(sdf.parse(s.date).before(curr));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            return true;
+            return s.status;
         });
 
         notifyDataSetChanged();
@@ -97,12 +100,12 @@ public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder
     }
 
     public void pastTasks(){
-        schedules= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
+        tasks= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
         Date curr=new Date();
         String pattern="dd/MM/YYYY";
 
         SimpleDateFormat sdf= new SimpleDateFormat(pattern);
-        schedules.removeIf(s -> {
+        tasks.removeIf(s -> {
             try {
                 return (sdf.parse(s.date).before(curr));
             } catch (ParseException e) {
@@ -111,12 +114,6 @@ public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder
             return true;
         });
 
-        notifyDataSetChanged();
-    }
-
-    public void onlySchedules(int day){
-        schedules= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
-        schedules.removeIf(s -> {return !s.isSchedule|!(s.day==day);});
         notifyDataSetChanged();
     }
 }

@@ -31,14 +31,20 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertSubject(Subject... subjects);
 
-    @Query("DELETE FROM Schedule WHERE date=:date AND subject=:subject")
-    void deleteSchedule(String date,String subject);
+    @Query("DELETE FROM Schedule WHERE uid=:id")
+    void deleteSchedule(int id);
 
-    @Query("DELETE FROM Schedule WHERE date=:date AND subject=:subject AND isSchedule= 1")
-    void deleteScheduleD(String date,String subject);
+    @Query("DELETE FROM Schedule WHERE date=:date AND subject=:subject")
+    void deleteScheduleArgs(String date,String subject);
+
+    @Query("DELETE FROM Schedule WHERE uid=:id AND isSchedule= 1")
+    void deleteScheduleD(int id);
+
+    @Query("DELETE FROM Subject WHERE uid=:id")
+    void deleteSubject(int id);
 
     @Query("DELETE FROM Subject WHERE subjectName=:subjectName AND teacher=:teacher")
-    void deleteSubject(String subjectName,String teacher);
+    void deleteSubjectArgs(String subjectName,String teacher);
 
     @Query("DELETE FROM Subject")
     void clearSubjects();

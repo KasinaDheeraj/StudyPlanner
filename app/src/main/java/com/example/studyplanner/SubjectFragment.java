@@ -101,11 +101,16 @@ public class SubjectFragment extends Fragment {
                                     AppDatabase db=AppDatabase.getDbInstance(getContext());
                                     int p=viewHolder.getAbsoluteAdapterPosition();
                                     Subject s=adapter.subjects.get(p);
-                                    db.userDao().deleteSubject(s.subjectName,s.teacher);
+                                    db.userDao().deleteSubject(s.uid);
 
                                     adapter.removeItem(p);
 
                                     Intent intent =new Intent(getContext(),AddSubjectActivity.class);
+                                    Bundle extras = new Bundle();
+                                    extras.putString("addSubname",s.subjectName);
+                                    extras.putString("addSubTeacher",s.teacher);
+                                    extras.putString("addSubnote",s.note);
+                                    intent.putExtras(extras);
                                     startActivity(intent);
                                 }
                             }).setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -132,7 +137,7 @@ public class SubjectFragment extends Fragment {
                                     AppDatabase db=AppDatabase.getDbInstance(getContext());
                                     int p=viewHolder.getAbsoluteAdapterPosition();
                                     Subject s=adapter.subjects.get(p);
-                                    db.userDao().deleteSubject(s.subjectName,s.teacher);
+                                    db.userDao().deleteSubject(s.uid);
 
                                     adapter.removeItem(p);
                                 }

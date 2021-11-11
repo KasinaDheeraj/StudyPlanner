@@ -48,7 +48,7 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        final Drawable upArrow = this.getDrawable(R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,6 +60,7 @@ public class AddTaskActivity extends AppCompatActivity {
         EditText noteET=findViewById(R.id.task_noteET);
         TextView remDate=findViewById(R.id.task_remdate);
         TextView remTime=findViewById(R.id.task_remtime);
+        TextView taskDate=findViewById(R.id.task_date);
         Button dateB=findViewById(R.id.task_dateButton);
         Button remDateB=findViewById(R.id.task_remdateButton);
         Button remTimeB=findViewById(R.id.task_remtimeButton);
@@ -67,6 +68,15 @@ public class AddTaskActivity extends AppCompatActivity {
         SwitchCompat st=findViewById(R.id.task_switch);
         SwitchCompat ss=findViewById(R.id.schedule_switch);
         Spinner spinner=findViewById(R.id.schedule_spinner);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            subET.setText(extras.getString("subject",""));
+            noteET.setText(extras.getString("note",""));
+            ss.setChecked(extras.getBoolean("isSchedule",false));
+            if(ss.isChecked()){spinner.setVisibility(View.VISIBLE);}
+            spinner.setSelection(extras.getInt("day",-1)+1);
+        }
 
         saveB.setOnClickListener(new View.OnClickListener() {
 
@@ -93,6 +103,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     }
                 }
                 s.isSchedule=ss.isChecked();
+                s.status=ss.isChecked();
                 if(s.isSchedule){
                     s.day=spinner.getSelectedItemPosition()-1;
                     if(s.day==-1){
@@ -101,7 +112,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     }
                 }
 
-                if(!dateB.getText().toString().equalsIgnoreCase("set date")|ss.isChecked()){
+                if(!dateB.getText().toString().equalsIgnoreCase("set date")|ss.isChecked()&&!dateB.getText().toString().equalsIgnoreCase("select time")){
                     s.date=dateB.getText().toString();
                     if(!s.subject.equals("") | !s.note.equals("")) {
 
@@ -111,7 +122,7 @@ public class AddTaskActivity extends AppCompatActivity {
                                 .setAction(R.string.undo, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        db.userDao().deleteSchedule(s.date,s.subject);
+                                        db.userDao().deleteScheduleArgs(s.date,s.subject);
                                     }
                                 }).show();
                     }else{
@@ -167,8 +178,24 @@ public class AddTaskActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(ss.isChecked()){
                     spinner.setVisibility(View.VISIBLE);
+                    taskDate.setText("Time :");
+                    dateB.setText("Select Time");
+                    dateB.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            setTime(dateB);
+                        }
+                    });
                 }else{
                     spinner.setVisibility(GONE);
+                    taskDate.setText("Date :");
+                    dateB.setText("SET DATE");
+                    dateB.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            setDate(dateB);
+                        }
+                    });
                 }
             }
         });

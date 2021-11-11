@@ -120,13 +120,19 @@ public class TaskFragment extends Fragment {
 
                                     AppDatabase db=AppDatabase.getDbInstance(getContext());
                                     int p=viewHolder.getAbsoluteAdapterPosition();
-                                    Schedule s=adapter.schedules.get(p);
+                                    Schedule s=adapter.tasks.get(p);
 
-                                    db.userDao().deleteSchedule(s.date,s.subject);
+                                    db.userDao().deleteSchedule(s.uid);
 
                                     adapter.removeItem(p);
 
                                     Intent intent =new Intent(getContext(),AddTaskActivity.class);
+                                    Bundle extras = new Bundle();
+                                    extras.putBoolean("isSchedule",s.isSchedule);
+                                    extras.putString("subject",s.subject);
+                                    extras.putString("note",s.note);
+                                    extras.putInt("day",s.day);
+                                    intent.putExtras(extras);
                                     startActivity(intent);
                                 }
                             }).setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -149,8 +155,8 @@ public class TaskFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     AppDatabase db=AppDatabase.getDbInstance(getContext());
                                     int p=viewHolder.getAbsoluteAdapterPosition();
-                                    Schedule s=adapter.schedules.get(p);
-                                    db.userDao().deleteSchedule(s.date,s.subject);
+                                    Schedule s=adapter.tasks.get(p);
+                                    db.userDao().deleteSchedule(s.uid);
 
                                     adapter.removeItem(p);
                                 }
