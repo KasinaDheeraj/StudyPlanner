@@ -2,6 +2,7 @@ package com.example.studyplanner;
 
 import static android.view.View.GONE;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +10,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -17,8 +17,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,13 +28,11 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.studyplanner.database.AppDatabase;
 import com.example.studyplanner.database.Schedule;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
@@ -42,6 +41,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class AddTaskActivity extends AppCompatActivity {
+
+    EditText subET,noteET;
+    TextView remDate,remTime,taskDate;
+    Button dateB,remDateB,remTimeB,saveB;
+    SwitchCompat st,ss;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +61,18 @@ public class AddTaskActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#000000\">" + getString(R.string.app_name) + "</font>",0));
         setStatusBarGradiant(this);
 
-        EditText subET=findViewById(R.id.task_subET);
-        EditText noteET=findViewById(R.id.task_noteET);
-        TextView remDate=findViewById(R.id.task_remdate);
-        TextView remTime=findViewById(R.id.task_remtime);
-        TextView taskDate=findViewById(R.id.task_date);
-        Button dateB=findViewById(R.id.task_dateButton);
-        Button remDateB=findViewById(R.id.task_remdateButton);
-        Button remTimeB=findViewById(R.id.task_remtimeButton);
-        Button saveB=findViewById(R.id.save_task);
-        SwitchCompat st=findViewById(R.id.task_switch);
-        SwitchCompat ss=findViewById(R.id.schedule_switch);
-        Spinner spinner=findViewById(R.id.schedule_spinner);
+        subET=findViewById(R.id.task_subET);
+        noteET=findViewById(R.id.task_noteET);
+        remDate=findViewById(R.id.task_remdate);
+        remTime=findViewById(R.id.task_remtime);
+        taskDate=findViewById(R.id.task_date);
+        dateB=findViewById(R.id.task_dateButton);
+        remDateB=findViewById(R.id.task_remdateButton);
+        remTimeB=findViewById(R.id.task_remtimeButton);
+        //saveB=findViewById(R.id.save_task);
+        st=findViewById(R.id.task_switch);
+        ss=findViewById(R.id.schedule_switch);
+        spinner=findViewById(R.id.schedule_spinner);
 
         Bundle extras = getIntent().getExtras();
         if(extras!=null) {
@@ -78,62 +83,13 @@ public class AddTaskActivity extends AppCompatActivity {
             spinner.setSelection(extras.getInt("day",-1)+1);
         }
 
-        saveB.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                AppDatabase db=AppDatabase.getDbInstance(AddTaskActivity.this);
-                Schedule s=new Schedule();
-                s.subject=subET.getText().toString();
-                s.note=noteET.getText().toString();
-
-                String pattern="dd/MM/YYYY";
-                if (!dateB.getText().toString().equalsIgnoreCase("set date")) {
-                    SimpleDateFormat sdf=new SimpleDateFormat(pattern);
-                    try {
-                        Date date=sdf.parse(dateB.getText().toString());
-                        Date curr=new Date();
-                        if(curr.after(date)){
-                            s.status=true;
-                        }else{
-                            s.status=false;
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                s.isSchedule=ss.isChecked();
-                s.status=ss.isChecked();
-                if(s.isSchedule){
-                    s.day=spinner.getSelectedItemPosition()-1;
-                    if(s.day==-1){
-                        Snackbar.make(findViewById(R.id.addTask),"Please select day for schedule.", Snackbar.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-
-                if(!dateB.getText().toString().equalsIgnoreCase("set date")|ss.isChecked()&&!dateB.getText().toString().equalsIgnoreCase("select time")){
-                    s.date=dateB.getText().toString();
-                    if(!s.subject.equals("") | !s.note.equals("")) {
-
-                        db.userDao().insertSchedule(s);
-
-                        Snackbar.make(findViewById(R.id.addTask), R.string.saved_success, Snackbar.LENGTH_LONG)
-                                .setAction(R.string.undo, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        db.userDao().deleteScheduleArgs(s.date,s.subject);
-                                    }
-                                }).show();
-                    }else{
-                        Snackbar.make(findViewById(R.id.addTask), R.string.valid_args, Snackbar.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Snackbar.make(findViewById(R.id.addTask), R.string.valid_args, Snackbar.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+//        saveB.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                save();
+//            }
+//        });
 
         remDateB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,6 +157,57 @@ public class AddTaskActivity extends AppCompatActivity {
         });
     }
 
+    public void save(){
+        AppDatabase db=AppDatabase.getDbInstance(AddTaskActivity.this);
+        Schedule s=new Schedule();
+        s.subject=subET.getText().toString();
+        s.note=noteET.getText().toString();
+
+        String pattern="dd/MM/YYYY";
+        if (!dateB.getText().toString().equalsIgnoreCase("set date")) {
+            SimpleDateFormat sdf=new SimpleDateFormat(pattern);
+            try {
+                Date date=sdf.parse(dateB.getText().toString());
+                Date curr=new Date();
+                if(curr.after(date)){
+                    s.status=true;
+                }else{
+                    s.status=false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        s.isSchedule=ss.isChecked();
+        s.status=ss.isChecked();
+        if(s.isSchedule){
+            s.day=spinner.getSelectedItemPosition()-1;
+            if(s.day==-1){
+                Snackbar.make(findViewById(R.id.addTask),"Please select day for schedule.", Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        if(!dateB.getText().toString().equalsIgnoreCase("set date")|ss.isChecked()&&!dateB.getText().toString().equalsIgnoreCase("select time")){
+            s.date=dateB.getText().toString();
+            if(!s.subject.equals("") | !s.note.equals("")) {
+
+                db.userDao().insertSchedule(s);
+
+                Snackbar.make(findViewById(R.id.addTask), R.string.saved_success, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.undo, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                db.userDao().deleteScheduleArgs(s.date,s.subject);
+                            }
+                        }).show();
+            }else{
+                Snackbar.make(findViewById(R.id.addTask), R.string.valid_args, Snackbar.LENGTH_SHORT).show();
+            }
+        }else{
+            Snackbar.make(findViewById(R.id.addTask), R.string.valid_args, Snackbar.LENGTH_SHORT).show();
+        }
+    }
 
     public void setDate(Button b){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -219,7 +226,7 @@ public class AddTaskActivity extends AppCompatActivity {
             {
                 String str="";
                 str += datePicker.getDayOfMonth()+"/";
-                str += datePicker.getMonth()+"/";
+                str += datePicker.getMonth()+1+"/";
                 str += datePicker.getYear();
                 b.setText(str);
             }
@@ -271,6 +278,21 @@ public class AddTaskActivity extends AppCompatActivity {
         });
         AlertDialog ad = dialogBuilder.create();
         ad.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add,menu);
+        menu.findItem(R.id.save_menu).setTitle(Html.fromHtml("<font color='#000000'>SAVE</font>",0));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.save_menu){
+            save();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static void setStatusBarGradiant(Activity activity) {

@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.majeur.cling.Cling;
+import com.majeur.cling.ClingManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -122,6 +123,7 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
     }
 
     public void setUpDayButtons(){
@@ -173,5 +175,25 @@ public class HomeFragment extends Fragment {
             }
             startActivity(intent);
         }
+    }
+
+    public void showTutorial(){
+        ClingManager mClingManager = new ClingManager(getActivity());
+
+        mClingManager.addCling(new Cling.Builder(getContext())
+                .setTitle("Days")
+                .setContent("Tap to see the schedule for each day of the week.")
+                .setTarget(new com.majeur.cling.ViewTarget(getActivity(), R.id.tues_home))
+                .setMessageBackground(R.color.black)
+                .build());
+
+        mClingManager.addCling(new Cling.Builder(getContext())
+                .setTitle("\n Add Subjects or Tasks ")
+                .setContent("You can add subjects and Tasks here...\n")
+                .setTarget(new com.majeur.cling.ViewTarget(getActivity(), R.id.fabth))
+                .setMessageBackground(R.color.black)
+                .build());
+
+        mClingManager.start();
     }
 }

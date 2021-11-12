@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/addSubject"
+    android:layout_margin="8dp"
     tools:context=".AddSubjectActivity">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -12,7 +13,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/teachEditTextLayout"
             android:layout_marginStart="32dp"
             app:hintAnimationEnabled="true"
             app:hintTextColor="@color/black"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_above="@+id/noteEditTextLayout"
+            android:layout_below="@+id/SubeditTextLayout"
             app:hintAnimationEnabled="true"
             app:hintTextColor="@color/black"
             android:textColorHint="@color/black"
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_centerInParent="true"
+            android:layout_below="@+id/teachEditTextLayout"
             app:hintAnimationEnabled="true"
             app:hintTextColor="@color/black"
             android:textColorHint="@color/black"
@@ -78,17 +78,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-    <Button
-        android:id="@+id/saveSub"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:text="Save"
-        app:strokeColor="#673AB7"
-        android:textColor="@color/black"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:layout_below="@+id/noteEditTextLayout"
-        android:onClick="saveAndExit"/>
+<!--    <Button-->
+<!--        android:id="@+id/saveSub"-->
+<!--        style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/noteEditTextLayout"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:onClick="saveAndClear"-->
+<!--        android:text="Save"-->
+<!--        android:textColor="@color/black"-->
+<!--        app:strokeColor="#673AB7" />-->
 
 </RelativeLayout>

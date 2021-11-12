@@ -46,10 +46,10 @@ public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder
         sub.setText(tasks.get(position).subject);
         note.setText(tasks.get(position).note);
 
-        SimpleDateFormat sdf1=new SimpleDateFormat("dd/MM/YYYY");
+        SimpleDateFormat sdf1=new SimpleDateFormat("dd/MM/yyyy");
         try {
             Date dt = sdf1.parse(tasks.get(position).date);
-            SimpleDateFormat sdf2=new SimpleDateFormat("dd MMM YY");
+            SimpleDateFormat sdf2=new SimpleDateFormat("dd MMM yy");
             String d=sdf2.format(dt);
             date.setText(d);
         } catch (ParseException e) {
@@ -83,7 +83,7 @@ public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder
     public void upcomingTasks(){
         tasks= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
         Date curr=new Date();
-        String pattern="dd/MM/YYYY";
+        String pattern="dd/MM/yyyy";
 
         SimpleDateFormat sdf= new SimpleDateFormat(pattern);
         tasks.removeIf(s -> {
@@ -102,7 +102,7 @@ public class RVTaskAdapter extends RecyclerView.Adapter<RVTaskAdapter.ViewHolder
     public void pastTasks(){
         tasks= AppDatabase.getDbInstance(context.getApplicationContext()).userDao().getTasks();
         Date curr=new Date();
-        String pattern="dd/MM/YYYY";
+        String pattern="dd/MM/yyyy";
 
         SimpleDateFormat sdf= new SimpleDateFormat(pattern);
         tasks.removeIf(s -> {

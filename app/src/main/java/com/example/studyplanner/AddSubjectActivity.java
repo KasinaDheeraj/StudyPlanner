@@ -1,5 +1,6 @@
 package com.example.studyplanner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -9,6 +10,8 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -50,7 +53,7 @@ public class AddSubjectActivity extends AppCompatActivity {
         }
 
     }
-    public void saveAndExit(View v){
+    public void saveAndClear(){
 
         AppDatabase db=AppDatabase.getDbInstance(this.getApplicationContext());
 
@@ -76,6 +79,21 @@ public class AddSubjectActivity extends AppCompatActivity {
         }else{
             Snackbar.make(findViewById(R.id.addSubject),"Please enter subject and teacher.", Snackbar.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add,menu);
+        menu.findItem(R.id.save_menu).setTitle(Html.fromHtml("<font color='#000000'>SAVE</font>",0));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.save_menu){
+            saveAndClear();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static void setStatusBarGradiant(Activity activity) {
