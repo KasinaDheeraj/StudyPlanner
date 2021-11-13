@@ -11,4 +11,11 @@
         android:text="In About fragment"
         android:layout_centerInParent="true"/>
 
+    <Button
+        android:id="@+id/setAlarm"
+        android:layout_centerInParent="true"
+        android:text="Set notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

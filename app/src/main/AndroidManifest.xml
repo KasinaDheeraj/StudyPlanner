@@ -39,6 +39,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"/>
+
+        <receiver
+            android:process=":remote"
+            android:name=".AlarmReceiver" />
     </application>
 
 </manifest>

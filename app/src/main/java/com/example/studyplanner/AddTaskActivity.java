@@ -37,16 +37,21 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class AddTaskActivity extends AppCompatActivity {
 
     EditText subET,noteET;
     TextView remDate,remTime,taskDate;
-    Button dateB,remDateB,remTimeB,saveB;
-    SwitchCompat st,ss;
+    Button dateB,remDateB,remTimeB;
+    SwitchCompat rem,ss;
     Spinner spinner;
+
+    private static List<String> days= Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +75,7 @@ public class AddTaskActivity extends AppCompatActivity {
         remDateB=findViewById(R.id.task_remdateButton);
         remTimeB=findViewById(R.id.task_remtimeButton);
         //saveB=findViewById(R.id.save_task);
-        st=findViewById(R.id.task_switch);
+        rem=findViewById(R.id.rem_switch);
         ss=findViewById(R.id.schedule_switch);
         spinner=findViewById(R.id.schedule_spinner);
 
@@ -83,13 +88,6 @@ public class AddTaskActivity extends AppCompatActivity {
             spinner.setSelection(extras.getInt("day",-1)+1);
         }
 
-//        saveB.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                save();
-//            }
-//        });
 
         remDateB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,10 +110,10 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         });
 
-        st.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        rem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(st.isChecked()){
+                if(rem.isChecked()){
                     remDate.setVisibility(View.VISIBLE);
                     remTime.setVisibility(View.VISIBLE);
                     remDateB.setVisibility(View.VISIBLE);
@@ -163,7 +161,7 @@ public class AddTaskActivity extends AppCompatActivity {
         s.subject=subET.getText().toString();
         s.note=noteET.getText().toString();
 
-        String pattern="dd/MM/YYYY";
+        String pattern="dd/MM/yyyy";
         if (!dateB.getText().toString().equalsIgnoreCase("set date")) {
             SimpleDateFormat sdf=new SimpleDateFormat(pattern);
             try {
@@ -199,13 +197,47 @@ public class AddTaskActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 db.userDao().deleteScheduleArgs(s.date,s.subject);
+                                if (s.isSchedule)
+                                    NotificationHelper.cancelAlarm(AddTaskActivity.this);
+                                else
+                                    NotificationHelper.cancelAlarm(AddTaskActivity.this);
                             }
                         }).show();
+                if(rem.isChecked()){setRemainder(s);}
             }else{
                 Snackbar.make(findViewById(R.id.addTask), R.string.valid_args, Snackbar.LENGTH_SHORT).show();
             }
         }else{
             Snackbar.make(findViewById(R.id.addTask), R.string.valid_args, Snackbar.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void setRemainder(Schedule s) {
+        if(s.isSchedule){
+            Calendar calendar=Calendar.getInstance();
+            SimpleDateFormat sdf=new SimpleDateFormat("HH:mm");
+            calendar.set(Calendar.DAY_OF_WEEK,days.indexOf(s.date)+1);
+            try {
+                Date date=sdf.parse(remTimeB.getText().toString());
+                calendar.setTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            NotificationHelper.setRepeatingAlarm(this,calendar,"Class Time!!");
+
+        }else{
+            Calendar calendar=Calendar.getInstance();
+
+            SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+            calendar.set(Calendar.HOUR_OF_DAY,9);
+            try {
+                Date date=sdf.parse(remDateB.getText().toString());
+                calendar.setTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            NotificationHelper.setAlarm(this,calendar,"Pending Task! Do before the deadline.");
         }
     }
 

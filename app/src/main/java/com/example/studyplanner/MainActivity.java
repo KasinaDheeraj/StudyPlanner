@@ -7,7 +7,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -19,15 +26,21 @@ import com.example.studyplanner.adapters.ViewpagerAdapter;
 import com.majeur.cling.Cling;
 import com.majeur.cling.ClingManager;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String FOR_FIRST_TIME = "for first time";
     private static final String MY_PREFS = "my_pref";
+    AlarmManager alarmManager;
+    PendingIntent pendingIntent;
     ViewPager viewPager;
     AnimatedBottomBar bottomBar;
     HomeFragment homeFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.white));
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#000000\">" + getString(R.string.app_name) + "</font>",0));
         setStatusBarGradiant(this);
+        createNotificationChannel();
 
         SharedPreferences prefs = getSharedPreferences(MY_PREFS,MODE_PRIVATE);
 
@@ -89,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void setupViewPager(FragmentManager fm,ViewPager viewPager) {
@@ -102,6 +115,29 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
 
+    }
+
+    private void cancelAlarm(){
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        if(alarmManager==null){
+            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        }
+        alarmManager.cancel(pendingIntent);
+    }
+
+    private void createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "studyPlanReminderChannel";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            String description = "Channel For Alarm Manager";
+            NotificationChannel channel = new NotificationChannel("studyplan", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     public static void setStatusBarGradiant(Activity activity) {

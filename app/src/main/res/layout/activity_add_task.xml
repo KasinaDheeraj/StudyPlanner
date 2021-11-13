@@ -120,7 +120,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:src="@drawable/ic_bell"
         android:layout_columnWeight="80"/>
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/task_switch"
+        android:id="@+id/rem_switch"
         android:layout_row="5"
         android:layout_column="1"
         android:layout_gravity="start"
@@ -142,7 +142,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_row="6"
         android:layout_column="1"
         android:layout_columnWeight="80"
-        android:text="@string/set_date"
+        android:text="01/01/2000"
         android:textColor="@color/black"
         android:gravity="center"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -164,21 +164,10 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_column="1"
         android:layout_columnWeight="80"
         android:textColor="@color/black"
-        android:text="@string/set_time"
+        android:text="09:00"
         android:gravity="center"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:visibility="gone"/>
-<!--    <Button-->
-<!--        android:id="@+id/save_task"-->
-<!--        android:layout_row="9"-->
-<!--        android:layout_column="0"-->
-<!--        android:layout_columnSpan="2"-->
-<!--        android:layout_rowSpan="2"-->
-<!--        android:layout_gravity="fill_horizontal"-->
-<!--        android:gravity="center_horizontal"-->
-<!--        style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-<!--        android:text="@string/save_task"-->
-<!--        android:textSize="18dp"-->
-<!--        app:strokeColor="#673AB7"/>-->
+
 
 </GridLayout>
