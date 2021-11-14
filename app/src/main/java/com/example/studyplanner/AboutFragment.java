@@ -30,6 +30,7 @@ public class AboutFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Calendar cal=Calendar.getInstance();
+                cal.setTime(new Date());
                 cal.add(Calendar.MINUTE,1);
                 NotificationHelper.setAlarm(getContext(),cal,"Bolthe Hai!!");
             }

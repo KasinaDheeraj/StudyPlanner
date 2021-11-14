@@ -45,8 +45,8 @@ import java.util.List;
 public class AddTaskActivity extends AppCompatActivity {
 
     EditText subET,noteET;
-    TextView remDate,remTime,taskDate;
-    Button dateB,remDateB,remTimeB;
+    TextView remTime,taskDate;
+    Button dateB,remTimeB;
     SwitchCompat rem,ss;
     Spinner spinner;
 
@@ -68,13 +68,10 @@ public class AddTaskActivity extends AppCompatActivity {
 
         subET=findViewById(R.id.task_subET);
         noteET=findViewById(R.id.task_noteET);
-        remDate=findViewById(R.id.task_remdate);
         remTime=findViewById(R.id.task_remtime);
         taskDate=findViewById(R.id.task_date);
         dateB=findViewById(R.id.task_dateButton);
-        remDateB=findViewById(R.id.task_remdateButton);
         remTimeB=findViewById(R.id.task_remtimeButton);
-        //saveB=findViewById(R.id.save_task);
         rem=findViewById(R.id.rem_switch);
         ss=findViewById(R.id.schedule_switch);
         spinner=findViewById(R.id.schedule_spinner);
@@ -88,13 +85,6 @@ public class AddTaskActivity extends AppCompatActivity {
             spinner.setSelection(extras.getInt("day",-1)+1);
         }
 
-
-        remDateB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDate(remDateB);
-            }
-        });
 
         dateB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,14 +104,11 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(rem.isChecked()){
-                    remDate.setVisibility(View.VISIBLE);
                     remTime.setVisibility(View.VISIBLE);
-                    remDateB.setVisibility(View.VISIBLE);
                     remTimeB.setVisibility(View.VISIBLE);
+
                 }else{
-                    remDate.setVisibility(GONE);
                     remTime.setVisibility(GONE);
-                    remDateB.setVisibility(GONE);
                     remTimeB.setVisibility(GONE);
                 }
             }
@@ -186,7 +173,7 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         }
 
-        if(!dateB.getText().toString().equalsIgnoreCase("set date")|ss.isChecked()&&!dateB.getText().toString().equalsIgnoreCase("select time")){
+        if(!dateB.getText().toString().equalsIgnoreCase("set date")||(ss.isChecked()&&!dateB.getText().toString().equalsIgnoreCase("select time"))){
             s.date=dateB.getText().toString();
             if(!s.subject.equals("") | !s.note.equals("")) {
 
@@ -229,11 +216,17 @@ public class AddTaskActivity extends AppCompatActivity {
         }else{
             Calendar calendar=Calendar.getInstance();
 
-            SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
-            calendar.set(Calendar.HOUR_OF_DAY,9);
+            SimpleDateFormat sdf=new SimpleDateFormat("HH:mm");
+
+            //calendar.set(Calendar.HOUR_OF_DAY,9);
+
             try {
-                Date date=sdf.parse(remDateB.getText().toString());
+                Date d= sdf.parse(remTimeB.getText().toString());
+                sdf=new SimpleDateFormat("dd/MM/yyyy");
+                Date date=sdf.parse(dateB.getText().toString());
                 calendar.setTime(date);
+                calendar.set(Calendar.HOUR_OF_DAY,d.getHours());
+                calendar.set(Calendar.MINUTE,d.getMinutes());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -248,7 +241,6 @@ public class AddTaskActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker);
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
 
         dialogBuilder.setTitle("Select Date");
         dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener()
